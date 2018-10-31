@@ -10,6 +10,10 @@ let siteSchema = new Schema({
         type: Number,
         default: 360000 // мс
     },
+    options: {
+        status: Number,
+        other: String
+    },
     statusContent: Number,
     state: {
         type: String, 

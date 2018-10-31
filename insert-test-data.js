@@ -1,7 +1,11 @@
 let mongoose = require('mongoose');
 let config = require('./config');
 require('./models/site');
+require('./models/request-query');
+require('./models/responce-query');
 let Site = mongoose.model('Site');
+let Request = mongoose.model('Request');
+let Responce = mongoose.model('Responce');
 
 
 const MONGO_URI = config.mongodbUri;
@@ -14,7 +18,13 @@ let data = prepareData();
 mongoose.connection.once('connected', () => {
   Site.deleteMany({})
     .then( () => {
-      return Site.insertMany(data)
+      return Request.deleteMany({});
+    })
+    .then( () => {
+      return Responce.deleteMany({});
+    })
+    .then( () => {
+      return Site.insertMany(data);
     })
     .then(res => {
       console.log('well done insert!');
