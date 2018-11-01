@@ -48,6 +48,7 @@ mongoose.connection.once('connected', () => {
           base: item.base._id
         });
 
+        // TODO: в одну последовательную цепь
         promises.push(Responce.findByIdAndDelete(item._id));
         promises.push(noti.save());
       });
