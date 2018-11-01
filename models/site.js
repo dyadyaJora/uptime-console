@@ -19,6 +19,8 @@ let siteSchema = new Schema({
         type: String, 
         enum: ['active', 'pending', 'stopped']
     },
+    active: Boolean,
+    notifies: [],
     lastUpdate: { type: Date, default: Date.now },
     //active: Boolean,
     //inQuery: Boolean,

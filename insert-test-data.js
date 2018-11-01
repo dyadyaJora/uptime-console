@@ -3,9 +3,11 @@ let config = require('./config');
 require('./models/site');
 require('./models/request-query');
 require('./models/responce-query');
+require('./models/notify-query');
 let Site = mongoose.model('Site');
 let Request = mongoose.model('Request');
 let Responce = mongoose.model('Responce');
+let Notify = mongoose.model('Notify');
 
 
 const MONGO_URI = config.mongodbUri;
@@ -17,6 +19,9 @@ let data = prepareData();
 
 mongoose.connection.once('connected', () => {
   Site.deleteMany({})
+    .then( () => {
+      return Notify.deleteMany({});
+    })
     .then( () => {
       return Request.deleteMany({});
     })
@@ -53,7 +58,13 @@ function prepareData() {
     item.url = urls[getRandomInt(0, urls.length - 1)];
     item.state = 'active';
     item.statusContent = -1;
+    item.notifies = ['email'];
+    item.options = {
+      status: -1,
+      other: 'any'
+    };
     item.needCheck = false;
+    item.active = true;
 
 
     for (let j = 0; j < 3; j++)
